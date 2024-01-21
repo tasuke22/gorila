@@ -1,0 +1,42 @@
+version: "3"
+
+volumes:
+  db-store:
+    driver: local
+services:
+  db:
+    image: mysql:latest
+    volumes:
+      - type: volume
+        source: db-store
+        target: /var/lib/mysql
+        volume:
+          nocopy: true
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_HOST: ${MYSQL_HOST}
+      MYSQL_PORT: ${MYSQL_PORT}
+      MYSQL_USER: ${MYSQL_USER}
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+      MYSQL_DATABASE: ${MYSQL_DATABASE}
+  app:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile
+    tty: true
+    ports:
+      - "8080:8080"
+      - "40000:40000"
+    security_opt:
+      - seccomp:unconfined
+    cap_add:
+      - SYS_PTRACE
+    volumes:
+      - type: bind
+        source: ./
+        target: /data
+      - /var/run/docker.sock:/var/run/docker.sock
+    depends_on:
+      - db
