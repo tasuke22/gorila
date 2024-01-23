@@ -16,7 +16,7 @@ func Test_todoRepository_GetAllTodos(t *testing.T) {
 	mockRepo := NewMockITodoRepository(ctrl)
 
 	// モックの期待値を設定
-	userId := uint(1)
+	userId := 1
 	// 引数として何らかのスライスと userId を受け取り、nil を返すことを期待 gomock.Any() はtodos の具体的な値に関心がないために使用
 	mockRepo.EXPECT().GetAllTodos(gomock.Any(), userId).Return(nil)
 
@@ -46,7 +46,8 @@ func TestGetTodo(t *testing.T) {
 
 	mockRepo := NewMockITodoRepository(ctrl)
 	var todo models.Todo
-	todoID, userID := uint(1), uint(1)
+	userID := 1
+	todoID := "1"
 
 	mockRepo.EXPECT().GetTodo(&todo, todoID, userID).Return(nil)
 
@@ -59,7 +60,8 @@ func TestDeleteTodo(t *testing.T) {
 	defer ctrl.Finish()
 
 	mockRepo := NewMockITodoRepository(ctrl)
-	todoID, userID := uint(1), uint(1)
+	userID := 1
+	todoID := "1"
 
 	mockRepo.EXPECT().DeleteTodo(todoID, userID).Return(nil)
 
