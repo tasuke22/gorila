@@ -1,4 +1,3 @@
-//go:generate mockgen -package $GOPACKAGE -source $GOFILE -destination mock_$GOFILE
 package services
 
 import (
