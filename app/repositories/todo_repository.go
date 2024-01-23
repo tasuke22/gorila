@@ -8,11 +8,11 @@ import (
 )
 
 type ITodoRepository interface {
-	GetAllTodos(todos *[]models.Todo, userId uint) error
-	GetTodo(todo *models.Todo, id uint, userId uint) error
-	GetTodoLast(todo *models.Todo, userId uint) error
+	GetAllTodos(todos *[]models.Todo, userId int) error
+	GetTodo(todo *models.Todo, id string, userId int) error
+	GetTodoLast(todo *models.Todo, userId int) error
 	CreateTodo(todo *models.Todo) error
-	DeleteTodo(id uint, userId uint) error
+	DeleteTodo(id string, userId int) error
 	UpdateTodo(todo *models.Todo, id string, userId int) error
 }
 
@@ -24,21 +24,21 @@ func NewTodoRepository(db *gorm.DB) ITodoRepository {
 	return &todoRepository{db}
 }
 
-func (tr *todoRepository) GetAllTodos(todos *[]models.Todo, userId uint) error {
+func (tr *todoRepository) GetAllTodos(todos *[]models.Todo, userId int) error {
 	if err := tr.db.Joins("User").Where("user_id = ?", userId).Find(&todos).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
-func (tr *todoRepository) GetTodo(todo *models.Todo, id uint, userId uint) error {
+func (tr *todoRepository) GetTodo(todo *models.Todo, id string, userId int) error {
 	if err := tr.db.Joins("User").Where("user_id=?", userId).First(&todo, id).Error; err != nil {
 		return err
 	}
 	return nil
 }
 
-func (tr *todoRepository) GetTodoLast(todo *models.Todo, userId uint) error {
+func (tr *todoRepository) GetTodoLast(todo *models.Todo, userId int) error {
 	if err := tr.db.Joins("User").Where("user_id=?", userId).Last(&todo).Error; err != nil {
 		return err
 	}
@@ -52,7 +52,7 @@ func (tr *todoRepository) CreateTodo(todo *models.Todo) error {
 	return nil
 }
 
-func (tr *todoRepository) DeleteTodo(id uint, userId uint) error {
+func (tr *todoRepository) DeleteTodo(id string, userId int) error {
 	if err := tr.db.Where("id=? AND user_id=?", id, userId).Delete(&models.Todo{}).Error; err != nil {
 		return err
 	}

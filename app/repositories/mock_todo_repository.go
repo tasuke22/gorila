@@ -53,7 +53,7 @@ func (mr *MockITodoRepositoryMockRecorder) CreateTodo(todo any) *gomock.Call {
 }
 
 // DeleteTodo mocks base method.
-func (m *MockITodoRepository) DeleteTodo(id, userId uint) error {
+func (m *MockITodoRepository) DeleteTodo(id string, userId int) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "DeleteTodo", id, userId)
 	ret0, _ := ret[0].(error)
@@ -67,7 +67,7 @@ func (mr *MockITodoRepositoryMockRecorder) DeleteTodo(id, userId any) *gomock.Ca
 }
 
 // GetAllTodos mocks base method.
-func (m *MockITodoRepository) GetAllTodos(todos *[]models.Todo, userId uint) error {
+func (m *MockITodoRepository) GetAllTodos(todos *[]models.Todo, userId int) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetAllTodos", todos, userId)
 	ret0, _ := ret[0].(error)
@@ -81,7 +81,7 @@ func (mr *MockITodoRepositoryMockRecorder) GetAllTodos(todos, userId any) *gomoc
 }
 
 // GetTodo mocks base method.
-func (m *MockITodoRepository) GetTodo(todo *models.Todo, id, userId uint) error {
+func (m *MockITodoRepository) GetTodo(todo *models.Todo, id string, userId int) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetTodo", todo, id, userId)
 	ret0, _ := ret[0].(error)
@@ -95,7 +95,7 @@ func (mr *MockITodoRepositoryMockRecorder) GetTodo(todo, id, userId any) *gomock
 }
 
 // GetTodoLast mocks base method.
-func (m *MockITodoRepository) GetTodoLast(todo *models.Todo, userId uint) error {
+func (m *MockITodoRepository) GetTodoLast(todo *models.Todo, userId int) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "GetTodoLast", todo, userId)
 	ret0, _ := ret[0].(error)
